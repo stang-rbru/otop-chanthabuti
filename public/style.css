@@ -1,0 +1,563 @@
+/* ============================================================
+   STARTER CSS — สำหรับ Workshop Week 2 (Flexbox + Responsive)
+   เวอร์ชันปรับปรุงสี: เน้นสีฟ้าเป็นหลัก
+   ------------------------------------------------------------
+   ✓ ส่วนที่เตรียมให้แล้ว: Reset, สี, font, ปุ่ม, card styling
+   ✓ ส่วนที่คุณต้องเขียน: TODO 1-5 ที่ลงโน้ตไว้ในไฟล์นี้ (เติมไว้ให้แล้ว)
+   ============================================================ */
+
+
+/* ============================================================
+   1) CSS RESET & BASE — ไม่ต้องแก้
+   ============================================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Sarabun', 'Segoe UI', 'Tahoma', sans-serif;
+  line-height: 1.6;
+  /* ⬇ ข้อความพื้นฐานเป็นสีเทาเข้มเพื่อให้สบายตาขึ้นเมื่อเทียบกับพื้นหลังสีฟ้าอ่อน */
+  color: #444; 
+  background: var(--bg);
+}
+
+a  { color: inherit; text-decoration: none; }
+li { list-style: none; }
+img { max-width: 100%; display: block; }
+
+/* 🌟 ชุดสีเวอร์ชันใหม่ (โทนฟ้า) 🌟 */
+:root {
+  /* primary, accent, light, dark ถูกเปลี่ยนเป็นโทนฟ้า-น้ำเงินทั้งหมด */
+  --primary: #2563EB;   /* 🌟 สีฟ้าสด (สีหลัก) */
+  --accent:  #1D4ED8;   /* 🌟 สีฟ้าเข้มขึ้น (สีเน้นสำหรับปุ่มเมื่อ Hover หรือ Badge text) */
+  --light:   #E8F2FF;   /* 🌟 สีฟ้าพาสเทลอ่อน (สำหรับองค์ประกอบพื้นหลังเล็กๆ เช่น Badge bg) */
+  --dark:    #1E3A8A;   /* 🌟 สีน้ำเงินเข้มมาก (สำหรับหัวข้อ H1-H4 และข้อความเน้น) */
+  --bg:      #F1F8FF;   /* 🌟 สีพื้นหลังเว็บ (ฟ้าอ่อนนุ่มๆ) */
+}
+
+
+/* ============================================================
+   ============== TODO 1: NAVBAR ===============================
+   ------------------------------------------------------------
+   เป้าหมาย: Logo ชิดซ้าย • Menu ชิดขวา • จัดกึ่งกลางแนวตั้ง
+   ============================================================ */
+.navbar {
+  display: flex ;
+  justify-content: space-between; /* ดันโลโก้ไปซ้ายสุด และเมนูไปขวาสุด */
+  align-items: center;           /* จัดให้อยู่กึ่งกลางในแนวตั้ง */
+  padding: 1rem 2rem;            /* เพิ่มช่องว่างด้านบน-ล่าง และซ้าย-ขวา */
+  background-color: #ffffff;     /* กำหนดสีพื้นหลังตามต้องการ */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05); /* เพิ่มมิติให้ navbar */
+  
+
+}
+
+.logo {
+  font-size: 1.4rem;
+  font-weight: 700;
+  /* ⬇ ใช้สีฟ้าหลัก */
+  color: var(--primary); 
+  
+
+
+}
+
+.menu {
+  /* ⬇ ทำให้ menu items เรียงเป็นแถว และเว้นระยะห่างกัน */
+  display: flex ;                 /* ทำให้รายการเมนูเรียงต่อกันเป็นแนวนอน */
+  list-style: none;              /* เอาจุดกลมๆ หน้า list ออก */
+  margin: 0;
+  padding: 0;
+  gap: 1.5rem;                   /* สร้างระยะห่างระหว่างแต่ละเมนู */
+  flex-shrink: 0;                /* ห้ามบีบเมนูจนตัวหนังสือหด */
+  white-space: nowrap;           /* ห้ามข้อความในเมนูลดไปขึ้นบรรทัดใหม่ */
+
+}
+
+.menu a:hover {
+  /* ⬇ เปลี่ยนสีเมนูเมื่อ Hover เป็นสีฟ้าหลัก */
+  color: var(--primary);
+  transition: color 0.2s;
+}
+
+
+/* ============================================================
+   ============== TODO 2: HERO SECTION =========================
+   ------------------------------------------------------------
+   เป้าหมาย: รูปฝั่งซ้าย + ข้อความฝั่งขวา เคียงข้างกัน
+             ภาพและข้อความควรกึ่งกลางแนวตั้ง มีระยะห่างชัดเจน
+   ============================================================ */
+.hero {
+  padding: 3rem 2rem;
+  /* ⬇ เขียน Flexbox properties ที่นี่ */
+  display: flex;          /* เปิดใช้งาน Flexbox ให้ลูกเรียงต่อกันเป็นแนวนอน */
+  align-items: center;    /* จัดให้ทั้งรูปและข้อความอยู่กึ่งกลางในแนวตั้งร่วมกัน */
+  gap: 2rem;              /* เว้นระยะห่างระหว่างรูปกับข้อความ */
+
+}
+
+.hero-img {
+  /* ⬇ ให้ภาพยืดเต็มครึ่งหนึ่งของพื้นที่ */
+  border-radius: 12px;
+  flex: 1;                /* แบ่งพื้นที่ 1 ส่วนเท่าๆ กัน */
+  width: 100%;            /* คุมขนาดความกว้างของรูปไม่ให้ล้นกล่อง */
+  object-fit: cover;      /* ช่วยให้รูปไม่เบี้ยวเวลาสเกล */
+}
+
+.hero-text {
+  /* ⬇ ให้ข้อความยืดเต็มอีกครึ่งหนึ่ง */
+  flex: 1;                /* แบ่งพื้นที่ 1 ส่วนเท่าๆ กัน (รวมกับรูปเป็น 50/50) */
+  align-items:start;
+}
+
+.hero-text h1 {
+  font-size: 2.2rem;
+  /* ⬇ ใช้สีน้ำเงินเข้มสำหรับหัวข้อใหญ่ */
+  color: var(--dark);
+  margin-bottom: 1rem;
+  line-height: 1.3;
+}
+
+.hero-text p {
+  /* ⬇ สีข้อความหลักเป็นเทาเข้ม */
+  color: #555;
+  margin-bottom: 1.2rem;
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.7rem 1.8rem;
+  /* ⬇ ใช้สีเน้น (Accent - ฟ้าเข้ม) สำหรับปุ่มเพื่อความชัดเจน */
+  background: var(--accent);
+  color: white;
+  border-radius: 6px;
+  font-weight: 700;
+  transition: transform 0.2s, background-color 0.2s; /* เพิ่ม transition สี */
+}
+
+.btn:hover { 
+  transform: translateY(-2px); 
+  background-color: var(--dark); /* Hover ปรับปุ่มให้เข้มขึ้นไปอีกเป็นน้ำเงินเข้ม */
+}
+
+
+/* ============================================================
+   ============== TODO 3: CARD GRID ============================
+   ------------------------------------------------------------
+   เป้าหมาย: 4 cards เรียงเป็นแถวบน desktop, ตัดบรรทัด (wrap) บนจอเล็ก
+             card แต่ละใบควรขนาดเท่ากัน มีระยะห่างชัด
+   ============================================================ */
+.cards-section {
+  padding: 3rem 2rem;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 1.8rem;
+  /* ⬇ สีน้ำเงินเข้ม */
+  color: var(--dark);
+  margin-bottom: 2.5rem;
+}
+
+.card-grid {
+  /* ⬇ ทำให้ cards เรียงเป็นแถว + wrap ได้ + มีระยะห่าง */
+  display: flex;
+  flex-wrap: wrap;           /* อนุญาตให้การ์ดตกบรรทัดใหม่ได้เมื่อพื้นที่ไม่พอ */
+  gap: 1.5rem;               /* เว้นระยะห่างระหว่างการ์ดแต่ละใบ */
+}
+
+.card {
+  /* ⬇ กำหนดขนาดและความยืดของ card */
+  flex: 1 1 250px;
+  background: white;
+  padding: 1.2rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  display: flex;
+flex-direction: column;
+
+}
+
+.card img {
+  width: 100%;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.card h3 {
+  /* ⬇ หัวข้อการ์ดเป็นน้ำเงินเข้ม */
+  color: var(--dark);
+  margin-bottom: 0.4rem;
+}
+
+.card p {
+  color: #666;
+  font-size: 0.95rem;
+  margin-bottom: 0.8rem;
+}
+
+.price {
+  display: block;
+  font-size: 1.2rem;
+  font-weight: 700;
+  /* ⬇ ราคาเป็นสีฟ้าหลักเพื่อให้โดดเด่น */
+  color: var(--primary);
+  margin-top: auto;
+}
+
+
+/* ============================================================
+   ============== TODO 4: FOOTER ===============================
+   ------------------------------------------------------------
+   เป้าหมาย: 3 คอลัมน์กระจายเท่า ๆ กัน
+   ============================================================ */
+.footer {
+  /* ⬇ ใช้สีน้ำเงินเข้มสำหรับพื้นหลัง Footer */
+  background: var(--dark);
+  /* ⬇ ใช้สีฟ้าพาสเทลอ่อนสำหรับข้อความเพื่อให้ตัดกัน */
+  color: var(--light);
+  padding: 2.5rem 2rem 1.5rem;
+  margin-top: 3rem;
+}
+
+.footer-inner {
+  /* ⬇ ทำให้ 3 คอลัมน์เรียงเป็นแถวและกระจายเท่า ๆ กัน */
+  display: flex;
+  justify-content:space-between;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.footer-col {
+  /* ⬇ ถ้าอยากให้ทุกคอลัมน์กว้างเท่ากันให้ใส่ flex: 1 */
+ flex: 1;
+}
+
+.footer-col h4 {
+  /* ⬇ หัวข้อใน Footer เป็นสีขาวเพื่อให้ชัดเจนที่สุด */
+  color: white;
+  margin-bottom: 0.8rem;
+}
+
+.footer-col p { margin-bottom: 0.4rem; }
+
+.copyright {
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
+
+
+/* ============================================================
+   ============== TODO 5: RESPONSIVE — Media Query =============
+   ------------------------------------------------------------
+   เป้าหมาย: เมื่อจอเล็กกว่า 768px (แท็บเล็ต/มือถือ) ให้:
+     • Hero เปลี่ยนจาก row → column (รูปอยู่บน, ข้อความอยู่ล่าง)
+     • ปรับ padding ของ section ให้น้อยลง
+   ============================================================ */
+
+/* ⬇ เขียน Media Query ของคุณที่นี่ */
+/* ============================================================
+   RESPONSIVE DESIGN (สำหรับหน้าจอเล็กกว่า 768px)
+   ============================================================ */
+@media (max-width: 768px) {
+  
+  /* 1. ปรับ Navbar: ให้โลโก้กับเมนู stack ต่อกันเป็นแนวตั้ง */
+  .navbar {
+    flex-direction: column;   /* เปลี่ยนจากเรียงแถวแนวนอนเป็นแนวตั้ง */
+    gap: 1rem;                /* เพิ่มระยะห่างระหว่างโลโก้กับเมนู */
+    padding: 1rem;            /* ลด padding บนหน้าจอเล็ก */
+  }
+
+  .navbar .menu {
+    gap: 1.2rem;              /* กระชับระยะห่างระหว่างแต่ละเมนูเล็กน้อย */
+  }
+
+  /* 2. ปรับ Hero: เปลี่ยนจากซ้าย-ขวา เป็น รูปอยู่บน ข้อความอยู่ล่าง */
+  .hero {
+    flex-direction: column;   /* 🌟 เปลี่ยนแนวการเรียงจาก row -> column */
+    padding: 1.5rem 1rem;     /* ปรับ padding ของ section ให้ลดลง */
+    gap: 1.5rem;              /* ปรับระยะห่างระหว่างรูปกับข้อความให้พอดีตา */
+  }
+
+  /* จัดระเบียบการจัดวางหลังจากสลับเป็นแนวตั้ง */
+  .hero-text {
+    text-align: center;       /* จัดข้อความให้อยู่กึ่งกลางเพื่อความสวยงามบนมือถือ */
+  }
+
+  /* 3. ปรับ Padding ของ Section อื่นๆ ให้น้อยลง */
+  .cards-section {
+    padding: 2rem 1rem;       /* ลด padding บน-ล่าง และซ้าย-ขวา */
+  }
+
+  .footer {
+    padding: 2rem 1rem 1.5rem;/* ลด padding เพื่อประหยัดพื้นที่หน้าจอมือถือ */
+  }
+
+  /* 4. ปรับ Footer: เปลี่ยนจาก 3 คอลัมน์แนวนอน เป็นเรียงต่อกันแนวตั้ง */
+  .footer-inner {
+    flex-direction: column;   /* ปรับให้คอลัมน์ซ้อนกันลงมา */
+    gap: 1.5rem;
+    text-align: center;       /* จัดข้อความใน footer ให้อยู่กึ่งกลาง */
+  }
+}
+
+/* card-header */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 0.5rem;
+  margin-bottom: 0.8rem;
+}
+
+.category-badge {
+  padding: 0.3rem 0.6rem;
+  /* ⬇ พื้นหลังฟ้าพาสเทลอ่อน */
+  background: var(--light);
+  /* ⬇ ข้อความน้ำเงินเข้มมาก */
+  color: var(--dark);
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.producer, .contact {
+  color: #666;
+  font-size: 0.95rem;
+  margin-bottom: 0.4rem;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.delete-btn {
+  padding: 0.5rem 1rem;
+  /* ⬇ ใช้สีเน้น (ฟ้าเข้ม) */
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.9rem;
+  transition: background 0.2s;
+}
+
+.delete-btn:hover {
+  /* ⬇ Hover ปรับให้เข้มขึ้นเป็นน้ำเงินเข้ม */
+  background: var(--dark)
+;
+}
+.add-form-section {
+  max-width: 700px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.add-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.form-group label {
+  font-weight: 700;
+  /* ⬇ สีน้ำเงินเข้ม */
+  color: var(--dark);
+  font-size: 0.95rem;
+}
+
+.form-group input,
+.form-group select {
+  padding: 0.75rem;
+  /* ⬇ ใช้สีฟ้าหลักสำหรับเส้นขอบปกติ */
+  border: 2px solid var(--light);
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  /* ⬇ ปรับเส้นขอบให้เข้มขึ้นเมื่อ Focus */
+  border-color: var(--primary);
+}
+
+.submit-btn {
+  padding: 0.9rem;
+  /* ⬇ ใช้สีฟ้าหลัก */
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.2s;
+}
+
+.submit-btn:hover {
+  /* ⬇ Hover ปรับให้เข้มขึ้น */
+  background: var(--accent);
+}
+
+@media (max-width: 600px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card-image {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+}
+
+.card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card-image.no-image {
+  background: #F0C88E;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #65463E;
+}
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.modal-overlay.hidden {
+  display: none;
+}
+
+/* Modal Box */
+.modal {
+  background: white;
+  border-radius: 12px;
+  max-width: 600px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 2rem;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.modal-header h2 {
+  color: #65463E;
+  margin: 0;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #999;
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+}
+
+.modal-close:hover {
+  background: #F0C88E;
+  color: #65463E;
+}
+
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.modal-footer {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.modal-footer button {
+  flex: 1;
+}
+
+.cancel-btn {
+  padding: 0.9rem;
+  background: white;
+  color: #65463E;
+  border: 2px solid #F0C88E;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.cancel-btn:hover {
+  background: #F0C88E;
+}
+
+/* Edit button on card */
+.edit-btn {
+  padding: 0.5rem 1rem;
+  background: #FB9E09;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.9rem;
+  margin-right: 0.5rem;
+}
+
+.edit-btn:hover {
+  background: #D13704;
+}
