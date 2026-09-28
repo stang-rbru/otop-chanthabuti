@@ -136,8 +136,7 @@ app.put("/api/products/:id", (req, res) => {
   // console.log("🚀 http://localhost:3000");
 // });
 
-const POST = process.env.POST || 3000;
-app.listen (POST,() => {
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
     console.log(`🚀 Server running on port ${PORT}`);
-
 });
